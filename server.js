@@ -1,4 +1,7 @@
-import axios from "axios";
+import {
+  MovieboxSession,
+  search
+} from "moviebox-js-sdk";
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -20,35 +23,30 @@ export default async function handler(req, res) {
 
   if (path === "/api/moviebox-test") {
     try {
-      const response = await axios.post(
-        "https://h5-api.aoneroom.com/wefeed-h5api-bff/subject/search",
-        {
-          keyword: "Avatar",
-          page: 1,
-          perPage: 20,
-          subjectType: 0
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "User-Agent": "Mozilla/5.0",
-            "x-client-info": JSON.stringify({
-              timezone: "America/Los_Angeles"
-            })
-          }
+      const session = new MovieboxSession({
+        host: "h5.aoneroom.com",
+        mirrorHosts: [
+          "h5.aoneroom.com",
+          "movieboxapp.in"
+        ],
+        retry: {
+          maxAttempts: 2,
+          delayMs: 250
         }
-      );
+      });
+
+      const results = await search(session, {
+        query: "Avatar"
+      });
 
       return res.end(JSON.stringify({
         ok: true,
-        data: response.data
+        results
       }));
     } catch (error) {
       return res.end(JSON.stringify({
         ok: false,
-        status: error.response?.status || null,
-        error: error.response?.data || error.message
+        error: error.message || String(error)
       }));
     }
   }
