@@ -36,12 +36,14 @@ export default async function handler(req, res) {
       });
 
       const results = await search(session, {
-        query: "Avatar"
+        query: "Titanic"
       });
 
       return res.end(JSON.stringify({
         ok: true,
-        results
+        searchQuery: "Titanic",
+        results: results.results,
+        raw: results.raw
       }));
     } catch (error) {
       return res.end(JSON.stringify({
