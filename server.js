@@ -20,21 +20,29 @@ export default async function handler(req, res) {
 
   if (path === "/api/moviebox-test") {
     try {
-      const response = await axios.get(
-        "https://h5.aoneroom.com",
+      const response = await axios.post(
+        "https://h5-api.aoneroom.com/wefeed-h5api-bff/subject/search",
+        {
+          keyword: "Avatar",
+          page: 1,
+          perPage: 20,
+          subjectType: 0
+        },
         {
           headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
             "User-Agent": "Mozilla/5.0",
-            "Accept": "text/html,application/xhtml+xml"
+            "x-client-info": JSON.stringify({
+              timezone: "America/Los_Angeles"
+            })
           }
         }
       );
 
       return res.end(JSON.stringify({
         ok: true,
-        status: response.status,
-        message: "H5 host is reachable",
-        dataPreview: String(response.data).slice(0, 500)
+        data: response.data
       }));
     } catch (error) {
       return res.end(JSON.stringify({
