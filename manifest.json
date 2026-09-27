@@ -1,0 +1,16 @@
+{
+  "id": "com.nick1234.moviebox",
+  "version": "1.0.0",
+  "name": "MovieBox Test",
+  "description": "MovieBox Stremio addon",
+  "resources": [
+    "catalog",
+    "meta",
+    "stream"
+  ],
+  "types": [
+    "movie",
+    "series"
+  ],
+  "catalogs": []
+}
