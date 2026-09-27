@@ -21,21 +21,20 @@ export default async function handler(req, res) {
   if (path === "/api/moviebox-test") {
     try {
       const response = await axios.get(
-        "https://h5.aoneroom.com/wefeed-h5api-bff/search",
+        "https://h5.aoneroom.com",
         {
-          params: {
-            q: "Avatar"
-          },
           headers: {
             "User-Agent": "Mozilla/5.0",
-            "Accept": "application/json"
+            "Accept": "text/html,application/xhtml+xml"
           }
         }
       );
 
       return res.end(JSON.stringify({
         ok: true,
-        data: response.data
+        status: response.status,
+        message: "H5 host is reachable",
+        dataPreview: String(response.data).slice(0, 500)
       }));
     } catch (error) {
       return res.end(JSON.stringify({
