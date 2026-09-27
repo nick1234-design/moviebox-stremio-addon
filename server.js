@@ -6,7 +6,6 @@ export default async function handler(req, res) {
 
   const path = new URL(req.url, "http://localhost").pathname;
 
-  // Stremio manifest
   if (path === "/manifest.json") {
     return res.end(JSON.stringify({
       id: "com.nick1234.moviebox",
@@ -19,11 +18,10 @@ export default async function handler(req, res) {
     }));
   }
 
-  // MovieBox connectivity test
   if (path === "/api/moviebox-test") {
     try {
       const response = await axios.post(
-        "https://i-api.aoneroom.com/wefeed-mobile-bff/subject-api/search"
+        "https://i-api.aoneroom.com/wefeed-mobile-bff/subject-api/search",
         {
           keyword: "Avatar",
           type: 0,
