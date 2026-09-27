@@ -20,18 +20,15 @@ export default async function handler(req, res) {
 
   if (path === "/api/moviebox-test") {
     try {
-      const response = await axios.post(
-        "https://api.aoneroom.com/wefeed-mobile-bff/subject-api/search",
+      const response = await axios.get(
+        "https://h5.aoneroom.com/wefeed-h5api-bff/search",
         {
-          keyword: "Avatar",
-          type: 0,
-          page: 1,
-          pageSize: 20
-        },
-        {
+          params: {
+            q: "Avatar"
+          },
           headers: {
-            "Content-Type": "application/json",
-            "X-M-Version": "4.0.02"
+            "User-Agent": "Mozilla/5.0",
+            "Accept": "application/json"
           }
         }
       );
@@ -43,6 +40,7 @@ export default async function handler(req, res) {
     } catch (error) {
       return res.end(JSON.stringify({
         ok: false,
+        status: error.response?.status || null,
         error: error.response?.data || error.message
       }));
     }
