@@ -1,6 +1,6 @@
 import {
   MovieboxSession,
-  search
+  getMovieDetails
 } from "moviebox-js-sdk";
 
 export default async function handler(req, res) {
@@ -35,15 +35,14 @@ export default async function handler(req, res) {
         }
       });
 
-      const results = await search(session, {
-        query: "Titanic"
+      const details = await getMovieDetails(session, {
+        detailPath: "titanic-m7a9yt0abq6"
       });
 
       return res.end(JSON.stringify({
         ok: true,
-        searchQuery: "Titanic",
-        results: results.results,
-        raw: results.raw
+        title: details.title,
+        details
       }));
     } catch (error) {
       return res.end(JSON.stringify({
