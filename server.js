@@ -21,7 +21,7 @@ export default async function handler(req, res) {
   if (path === "/api/moviebox-test") {
     try {
       const response = await axios.post(
-        "https://i-api.aoneroom.com/wefeed-mobile-bff/subject-api/search",
+        "https://api.aoneroom.com/wefeed-mobile-bff/subject-api/search",
         {
           keyword: "Avatar",
           type: 0,
